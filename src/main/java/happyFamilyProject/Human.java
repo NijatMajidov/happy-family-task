@@ -1,8 +1,6 @@
 package happyFamilyProject;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Human extends Family {
 
@@ -10,27 +8,23 @@ public class Human extends Family {
     private String surname;
     private int year;
     private int iq;
+    private Family family;
+    private Map<DayOfWeek, String> schedule;
     private Pet pet;
-
-    private String[][] schedule;
 
     public Human(String name, String surname, int year) {
         this.name = name;
         this.surname = surname;
         this.year = year;
     }
-
-    public Human(String name, String surname, int year, Human mother, Human father) {
-        super(mother, father);
-        this.name = name;
-        this.surname = surname;
-        this.year = year;
-    }
-    public Human(String name, String surname, int year, int iq, Pet pet, Human mother, Human father, String[][] schedule) {
-        this(name, surname, year, mother, father);
+    public Human(String name, String surname, int year, int iq, Map<DayOfWeek, String> schedule) {
+        this(name,surname,year);
         this.iq = iq;
-        this.pet = pet;
         this.schedule = schedule;
+    }
+    public Human(String name, String surname, int year, int iq, Map<DayOfWeek, String> schedule, Family family) {
+        this(name,surname,year,iq,schedule);
+        this.family = family;
     }
 
     public String getName() {
@@ -41,11 +35,11 @@ public class Human extends Family {
         this.name = name;
     }
 
-    public String getSurnam() {
+    public String getSurname() {
         return surname;
     }
 
-    public void setSurnam(String surnam) {
+    public void setSurname(String surnam) {
         this.surname = surnam;
     }
 
@@ -65,84 +59,97 @@ public class Human extends Family {
         this.iq = iq;
     }
 
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public String[][] getSchedule() {
+    public Map<DayOfWeek, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String[][] schedule) {
+    public Pet getPet() {
+        return pet;
+    }
+    public void adoptPet(Pet pet) {
+        this.pet = pet;
+        if (family != null) {
+            family.setPets();
+        }
+    }
+
+    public void setSchedule(Map<DayOfWeek, String> schedule) {
         this.schedule = schedule;
     }
 
+    public Family getFamily() { return family; }
+    public void setFamily(Family family) { this.family = family; }
+
     public void greetPet() {
-        if (pet != null) {
-            System.out.println("Hello, " + pet.getNickname());
+        if (family != null && family.getPets() != null) {
+            for (Pet pet : family.getPets()) {
+                System.out.println("Hello, " + pet.getNickname());
+            }
         } else {
             System.out.println("No pet to greet");
         }
     }
 
     public void describePet() {
-        if (pet != null) {
-            String slyLevel = (pet.getTrickLevel() > 50) ? "very sly" : "almost not sly";
-            System.out.println("I have a " + pet.getSpecies() + ", it is " + pet.getAge() + " years old, it is " + slyLevel + ".");
+        if (family.getPets() != null) {
+            for(Pet pet : family.getPets()) {
+                String slyLevel = (pet.getTrickLevel() > 50) ? "very sly" : "almost not sly";
+                System.out.println("I have a " + pet.getSpecies() + ", it is " + pet.getAge() + " years old, it is " + slyLevel + ".");
+            }
         } else {
             System.out.println("No pet to describe");
         }
     }
     public boolean feedPet(boolean isItTimeForFeeding) {
-        if (pet == null) {
+        if (family == null || family.getPets() == null) {
             System.out.println("No pet to feed");
             return false;
         }
-        if (isItTimeForFeeding) {
-            System.out.println("Hm... I will feed " + name + "'s " + pet.toString());
-            return true;
-        } else {
-            Random random = new Random();
-            int randomNumber = random.nextInt(101); // 0-100
-            if (pet.getTrickLevel()> randomNumber) {
+        for (Pet pet : family.getPets()) {
+            if (isItTimeForFeeding && pet.getTrickLevel() > new Random().nextInt(101)) {
                 System.out.println("Hm... I will feed " + name + "'s " + pet.getNickname());
                 return true;
             } else {
-                System.out.println("I think " + name + " is not hungry.");
+                System.out.println("I think " + pet.getNickname() + " is not hungry.");
                 return false;
             }
         }
+        return false;
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return year == human.year && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname)
-                && Objects.equals(pet, human.pet) && Objects.equals(getMother(), getFather()) && Objects.equals(getMother(), getFather())
-                && Arrays.equals(schedule, human.schedule);
+        return year == human.year && iq == human.iq &&
+                Objects.equals(name, human.name) &&
+                Objects.equals(surname, human.surname) &&
+                Objects.equals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(name, surname, year, iq, pet, getMother(), getFather());
-        result = 31 * result + Arrays.hashCode(schedule);
-        return result;
+        return Objects.hash(name, surname, year, iq,schedule);
+
     }
 
     @Override
     public String toString() {
-        return "Human{name='" + name +
-                ", surname='" + surname +
-                ", year=" + year +
-                ", iq=" + iq +
-                ", mother=" + (getMother() != null ? getMother().name + " " + getMother().surname : "unknown") +
-                ", father=" + (getFather() != null ? getFather().name + " " + getFather().surname : "unknown") +
-                ", pet=" + (pet != null ? pet.toString():"Dont have a pet") + "}";
-
+        return """
+                Human{
+                    name: '%s',
+                    surname: '%s',
+                    year: %d,
+                    iq: %d,
+                    mother: %s,
+                    father: %s,
+                    pet: %s
+                }
+                """.formatted(
+                name, surname, year, iq,
+                (getMother() != null ? getMother().name + " " + getMother().surname : "unknown"),
+                (getFather() != null ? getFather().name + " " + getFather().surname : "unknown"),
+                (pet != null ? pet : "Don't have a pet")
+        );
     }
 }

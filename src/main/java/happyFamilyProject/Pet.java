@@ -1,15 +1,15 @@
 package happyFamilyProject;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 
-public class Pet {
+abstract class Pet {
 
     private String nickname;
     private int age;
     private String species;
     private int trickLevel;
-    private String[] habits;
+    private Set<String> habits;
 
     public Pet() {}
 
@@ -18,7 +18,7 @@ public class Pet {
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, int age, int trickLevel, String[] habits) {
+    public Pet(String species, String nickname, int age, int trickLevel,Set<String> habits) {
         this(species, nickname);
         this.age = age;
         this.trickLevel = trickLevel;
@@ -57,11 +57,11 @@ public class Pet {
         this.trickLevel = trickLevel;
     }
 
-    public String[] getHabits() {
+    public Set<String> getHabits() {
         return habits;
     }
 
-    public void setHabits(String[] habits) {
+    public void setHabits(Set<String> habits) {
         this.habits = habits;
     }
 
@@ -69,9 +69,7 @@ public class Pet {
         System.out.println("I am eating");
     }
 
-    public void respond(){
-        System.out.println("Hello, owner. I am " + nickname +". I miss you!");
-    }
+    public abstract void respond();
 
     public void foul(){
         System.out.println("I need to cover it up");
@@ -82,24 +80,23 @@ public class Pet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pet pet = (Pet) o;
-        return age == pet.age && trickLevel == pet.trickLevel && Objects.equals(nickname, pet.nickname)
-                && Objects.equals(species, pet.species) && Arrays.equals(habits, pet.habits);
+        return age == pet.age && trickLevel == pet.trickLevel &&
+                Objects.equals(nickname, pet.nickname) &&
+                Objects.equals(species, pet.species) &&
+                Objects.equals(habits, pet.habits);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(nickname, age, species, trickLevel);
-        result = 3 * result + Arrays.hashCode(habits);
-        return result;
+        return Objects.hash(nickname, age, species, trickLevel,habits);
     }
 
     @Override
     public String toString() {
-        return species + "{" +
-                "nickname='" + nickname +
-                ", age=" + age +
-                ", trickLevel=" + trickLevel +
-                ", habits=" + Arrays.toString(habits) + "}";
-
+        return """
+            species: %s nickname: '%s'
+                     age: %d trickLevel: %d
+                     habits: %s """.formatted(species, nickname, age, trickLevel, habits);
     }
+
 }
