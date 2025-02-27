@@ -48,7 +48,8 @@ public class MainApp {
         System.out.println("Family member count: "+family.countFamily());
         System.out.println(family);
 
-        family.deleteChild(child1);
+        boolean removed2 = family.deleteChild(child1);
+        System.out.println("Test 4. Child removed (human): " + removed2);
         System.out.println(family);
     }
 }
