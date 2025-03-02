@@ -4,13 +4,13 @@ import happyFamilyProject.base.Family;
 import java.util.ArrayList;
 import java.util.List;
 
-class CollectionFamilyDao implements FamilyDao {
+public class CollectionFamilyDao implements FamilyDao {
 
     private List<Family> families = new ArrayList<>();
 
     @Override
     public List<Family> getAllFamilies() {
-        return families;
+        return new ArrayList<>(families);
     }
 
     @Override

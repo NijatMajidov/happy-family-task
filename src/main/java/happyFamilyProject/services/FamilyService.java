@@ -2,7 +2,6 @@ package happyFamilyProject.services;
 
 import happyFamilyProject.base.*;
 import happyFamilyProject.dao.FamilyDao;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -22,8 +21,11 @@ public class FamilyService {
 
     public void displayAllFamilies() {
         List<Family> families = familyDao.getAllFamilies();
-        for (int i = 0; i < families.size(); i++) {
-            System.out.println(i + ": " + families.get(i));
+        if (families != null){
+            for (int i = 0; i < families.size(); i++) {
+            System.out.println("Family " + (i + 1) + ": " + families.get(i));
+        }}else{
+            System.out.println("Family is null!");
         }
     }
 

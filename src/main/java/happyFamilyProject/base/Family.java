@@ -23,7 +23,7 @@ public class Family {
 
     public Human getMother() { return mother; }
     public Human getFather() { return father; }
-    public List<Human> getChildren() { return children; }
+    public List<Human> getChildren() { return children == null ? new ArrayList<>() : children; }
     public Set<Pet> getPets() { return pets; }
 
     public void addChild(Human child) {
@@ -89,8 +89,8 @@ public class Family {
         """.formatted(
                 (mother != null ? mother.toString() : "unknown"),
                 (father != null ? father.toString() : "unknown"),
-                (children.isEmpty() ? "none" : children.toString()),
-                (pets.isEmpty() ? "no pets" : pets)
+                (children == null ? "none" : children.toString()),
+                (pets== null ? "no pets" : pets)
         );
     }
 }
