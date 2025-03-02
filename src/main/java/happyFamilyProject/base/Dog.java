@@ -1,11 +1,11 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
 import java.util.Set;
 
-class Dog extends Pet implements Foulable {
+public class Dog extends Pet implements Foulable {
 
     public Dog(String nickname, int age, int trickLevel, Set<String> habits) {
-        super(Species.DOG.toString(), nickname, age, trickLevel, habits);
+        super(Species.DOG, nickname, age, trickLevel, habits);
     }
 
     @Override

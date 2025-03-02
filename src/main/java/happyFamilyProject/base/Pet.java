@@ -1,24 +1,24 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
 import java.util.Objects;
 import java.util.Set;
 
-abstract class Pet {
+public abstract class Pet {
 
     private String nickname;
     private int age;
-    private String species;
+    private Species species;
     private int trickLevel;
     private Set<String> habits;
 
     public Pet() {}
 
-    public Pet(String species, String nickname) {
+    public Pet(Species species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, int age, int trickLevel,Set<String> habits) {
+    public Pet(Species species, String nickname, int age, int trickLevel,Set<String> habits) {
         this(species, nickname);
         this.age = age;
         this.trickLevel = trickLevel;
@@ -41,11 +41,11 @@ abstract class Pet {
         this.age = age;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 

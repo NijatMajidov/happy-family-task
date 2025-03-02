@@ -1,4 +1,6 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
+
+import happyFamilyProject.base.DayOfWeek;
 
 import java.util.*;
 
@@ -16,6 +18,12 @@ public class Human extends Family {
         this.name = name;
         this.surname = surname;
         this.year = year;
+    }
+    public Human(String name, String surname, Family family) {
+        this.name = name;
+        this.surname = surname;
+        this.year = 0;
+        this.family=family;
     }
     public Human(String name, String surname, int year, int iq, Map<DayOfWeek, String> schedule) {
         this(name,surname,year);

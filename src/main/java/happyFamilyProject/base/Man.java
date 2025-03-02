@@ -1,10 +1,15 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
 import java.util.Map;
 
-final class Man extends Human {
+public final class Man extends Human {
     public Man(String name, String surname, int year, int iq, Map<DayOfWeek, String> schedule) {
         super(name, surname, year, iq, schedule);
+    }
+
+    @Override
+    public void greetPet() {
+        System.out.println("Hey buddy!");
     }
 
     public void repairCar() {

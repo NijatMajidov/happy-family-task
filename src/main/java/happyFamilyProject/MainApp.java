@@ -1,5 +1,7 @@
 package happyFamilyProject;
 
+import happyFamilyProject.base.*;
+
 import java.util.*;
 
 public class MainApp {
@@ -13,13 +15,16 @@ public class MainApp {
         Map<DayOfWeek, String> schedule = new HashMap<>();
         schedule.put(DayOfWeek.MONDAY, "Go to school");
 
-        Human father = new Man("John", "Smith", 1978, 110, schedule);
-        Human mother = new Woman("Jane", "Smith", 1980, 100, schedule);
+        Man father = new Man("John", "Smith", 1978, 110, schedule);
+        Woman mother = new Woman("Jane", "Smith", 1980, 100, schedule);
 
         Family family = new Family(mother,father);
         father.setFamily(family);
         mother.setFamily(family);
         father.adoptPet(pet);
+
+        mother.makeup();
+        father.repairCar();
 
         Human child1 = new Human("Emma", "Smith", 10);
         Human child2 = new Human("Liam", "Smith", 8);

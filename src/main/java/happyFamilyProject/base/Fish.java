@@ -1,11 +1,11 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
 import java.util.Set;
 
 class Fish extends Pet {
 
     public Fish(String nickname, int age, int trickLevel, Set<String> habits) {
-        super(Species.FISH.toString(), nickname, age, trickLevel, habits);
+        super(Species.FISH, nickname, age, trickLevel, habits);
     }
 
     @Override

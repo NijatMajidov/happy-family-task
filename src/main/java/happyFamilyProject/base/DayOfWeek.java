@@ -1,6 +1,6 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
-enum DayOfWeek {
+public enum DayOfWeek {
 
     SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
 }

@@ -1,4 +1,4 @@
-package happyFamilyProject;
+package happyFamilyProject.base;
 
 interface Foulable {
 
